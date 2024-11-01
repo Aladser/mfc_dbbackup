@@ -44,6 +44,7 @@ password = '_strongpassword_'
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         # пользователи
+        User.truncate()
         Seeding.seed_table(WorkPosition, position_obj_list)
         programmer = WorkPosition.objects.get(name="инженер-программист 1 категории")
         leading_programmer = WorkPosition.objects.get(name="ведущий программист")

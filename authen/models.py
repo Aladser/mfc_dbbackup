@@ -2,8 +2,10 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 from config.settings import NULLABLE
+from libs.truncate_table_mixin import TruncateTableMixin
 
-class WorkPosition(models.Model):
+
+class WorkPosition(TruncateTableMixin, models.Model):
     name = models.CharField(max_length=255, verbose_name="Название")
 
     class Meta:
@@ -14,7 +16,7 @@ class WorkPosition(models.Model):
         return self.name
 
 
-class User(AbstractUser):
+class User(TruncateTableMixin, AbstractUser):
     username = None
     email = models.EmailField(verbose_name='почта', unique=True)
 

@@ -1,12 +1,20 @@
 from django.db import models
 
+from authen.models import User
+
+
 class BackupRecord(models.Model):
-    created_at = models.DateField(auto_now_add=True,verbose_name="Дата создания копии")
+    created_at = models.DateField(verbose_name="Дата создания копии")
     content = models.CharField(max_length=255, verbose_name="Содержание копии")
     size = models.PositiveIntegerField(verbose_name="Размер резервной копии (Мб)")
     storage_number = models.CharField(max_length=255, verbose_name="Учетный номер носителя")
     storage_location = models.CharField(max_length=255, verbose_name="Место хранения носителя")
-    responsible_person = models.CharField(max_length=255, verbose_name="ФИО, должность лица")
+    responsible_person = models.ForeignKey(
+        to=User,
+        verbose_name="ФИО",
+        on_delete=models.CASCADE,
+        related_name='backup_records',
+    )
 
     class Meta:
         verbose_name = 'Запись бэкапа'
